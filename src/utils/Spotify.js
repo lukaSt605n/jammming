@@ -10,11 +10,13 @@ const Spotify = {
     const hash = window.location.hash.substring(1);
     const params = new URLSearchParams(hash);
 
+    // Check if the token has expired or doesn't exist
     if (now > tokenExpiration || !accessToken) {
       accessToken = params.get('access_token');
       const expiresIn = params.get('expires_in') * 1000;
 
       if (accessToken) {
+        console.log('Access Token:', accessToken); // Log the token for debugging
         tokenExpiration = now + expiresIn;
         window.history.replaceState({}, '', window.location.pathname);
       } else {
@@ -24,6 +26,7 @@ const Spotify = {
           'streaming'
         ].join('%20');
         
+        // Redirect to Spotify authorization
         window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=${scopes}&redirect_uri=${encodeURIComponent(redirectUri)}`;
       }
     }
@@ -66,11 +69,16 @@ const Spotify = {
         Authorization: `Bearer ${token}`
       };
 
+      // Fetch user data to get user ID
       const userResponse = await fetch('https://api.spotify.com/v1/me', { headers });
-      if (!userResponse.ok) throw new Error(`Failed to fetch user info: ${userResponse.statusText}`);
-      
+      if (!userResponse.ok) {
+        const errorData = await userResponse.json();
+        console.error('Failed to fetch user info:', errorData);
+        throw new Error(`Failed to fetch user info: ${userResponse.statusText}`);
+      }
       const userData = await userResponse.json();
 
+      // Create the playlist
       const playlistResponse = await fetch(
         `https://api.spotify.com/v1/users/${userData.id}/playlists`,
         {
@@ -80,10 +88,14 @@ const Spotify = {
         }
       );
 
-      if (!playlistResponse.ok) throw new Error(`Failed to create playlist: ${playlistResponse.statusText}`);
-
+      if (!playlistResponse.ok) {
+        const errorData = await playlistResponse.json();
+        console.error('Playlist creation failed:', errorData);
+        throw new Error(`Failed to create playlist: ${playlistResponse.statusText}`);
+      }
       const playlistData = await playlistResponse.json();
 
+      // Add tracks to the created playlist
       const trackResponse = await fetch(
         `https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`,
         {
@@ -93,7 +105,12 @@ const Spotify = {
         }
       );
 
-      if (!trackResponse.ok) throw new Error(`Failed to add tracks to playlist: ${trackResponse.statusText}`);
+      if (!trackResponse.ok) {
+        const errorData = await trackResponse.json();
+        console.error('Failed to add tracks to playlist:', errorData);
+        throw new Error(`Failed to add tracks to playlist: ${trackResponse.statusText}`);
+      }
+
     } catch (error) {
       console.error('Error in createPlaylist:', error);
       throw error;
