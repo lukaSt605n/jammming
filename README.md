@@ -1,7 +1,7 @@
 # Jammming 🎵  
 **Codecademy Portfolio Project**  
 
-A React web app that lets you create Spotify playlists by searching for songs and saving them to your account. Built as part of Codecademy's Full-Stack Engineer career path.
+A React web app that lets you create Spotify playlists by searching for songs and saving them to your account. Built as part of Codecademy's Front End career path.
 
 ## Features 🎮  
 ✔️ Spotify login integration  
