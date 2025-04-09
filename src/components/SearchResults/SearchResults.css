@@ -1,0 +1,64 @@
+:root {
+  --shared-box-shadow: 0 4px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.SearchResults {
+  background-color: rgba(6, 59, 90, 0.7);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shared-box-shadow);
+}
+
+.SearchResults h2 {
+  color: white;
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.TrackList {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+
+.TrackList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.TrackList::-webkit-scrollbar-track {
+  background: rgba(1, 12, 63, 0.3);
+}
+
+.TrackList::-webkit-scrollbar-thumb {
+  background: #A0D8E0;
+  border-radius: 3px;
+}
+
+.SearchResults button {
+  background-color: #A0D8E0;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.SearchResults button:hover {
+  background-color: #8bc9cb;
+}
+
+@media (max-width: 1200px) {
+  .SearchResults {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .SearchResults {
+    padding: 1rem;
+  }
+}
