@@ -1,4 +1,4 @@
-const clientId = '27c6d493f3a844c2928c22c19b661ef5';
+const clientId = 'client ID';
 const redirectUri = window.location.href;
 
 let accessToken = null;
